@@ -55,3 +55,14 @@ def delete_post(id:int,db: Session = Depends(get_db)):
    deleted_post.delete(synchronize_session=False)
    db.commit()
    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+###################################USERS###########################################
+
+@app.post('/Users',status_code=status.HTTP_201_CREATED)
+def create_user(user:Schema.Users,db: Session=Depends(get_db)):
+   cereated_user=models.user(** user.model_dump())
+   db.add(cereated_user)
+   db.commit()
+   db.refresh(cereated_user)
+   return cereated_user

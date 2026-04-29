@@ -15,3 +15,18 @@ class Post(BasePost):
     
     class Config:
         from_attributes=True
+
+
+class Users(BaseModel):
+        name:str
+        email:str
+        password:str
+
+
+
+class ResUsers(Users):
+        id:str
+        created_at:datetime
+
+        class config:
+             from_attributes=True
