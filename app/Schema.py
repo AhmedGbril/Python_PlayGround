@@ -1,5 +1,7 @@
-from pydantic import BaseModel
+from uuid import UUID
+from pydantic import BaseModel,EmailStr
 from datetime import datetime
+
 
 class BasePost(BaseModel):
     title: str
@@ -19,14 +21,20 @@ class Post(BasePost):
 
 class Users(BaseModel):
         name:str
-        email:str
+        email:EmailStr
         password:str
 
 
 
-class ResUsers(Users):
-        id:str
+class ResUsers(BaseModel):
+        id:UUID
+        name:str
+        email:EmailStr
         created_at:datetime
 
         class config:
              from_attributes=True
+
+class UserLogin(BaseModel):
+     Email:EmailStr
+     Password:str
