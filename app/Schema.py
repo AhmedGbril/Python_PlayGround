@@ -1,3 +1,4 @@
+from typing import Optional
 from uuid import UUID
 from pydantic import BaseModel,EmailStr
 from datetime import datetime
@@ -11,9 +12,21 @@ class BasePost(BaseModel):
 class CreatePost(BasePost):
     pass
 
+class ResUsers(BaseModel):
+        id:UUID
+        name:str
+        email:EmailStr
+        created_at:datetime
+
+        class config:
+             from_attributes=True
+
 class Post(BasePost):
     id:int
+    user_id:UUID
+    user_mod:ResUsers
     created_at:datetime
+
     
     class Config:
         from_attributes=True
@@ -26,15 +39,15 @@ class Users(BaseModel):
 
 
 
-class ResUsers(BaseModel):
-        id:UUID
-        name:str
-        email:EmailStr
-        created_at:datetime
 
-        class config:
-             from_attributes=True
 
 class UserLogin(BaseModel):
      Email:EmailStr
      Password:str
+
+class AccessToken(BaseModel):
+     access_token:str
+     token_type:str
+
+class TokenData(BaseModel):
+     id:Optional[UUID]=None

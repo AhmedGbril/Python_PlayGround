@@ -1,6 +1,6 @@
 import uuid
-from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, text
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, TIMESTAMP, text,Uuid
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime
 from .database import Base
 
@@ -13,6 +13,9 @@ class post(Base):
     content = Column(String, nullable=False)
     published = Column(Boolean, server_default="true", nullable=False)
     created_at = Column(TIMESTAMP, server_default=text("now()"), nullable=False)
+    user_id= Column(Uuid,ForeignKey("users.id",ondelete="CASCADE"),nullable=False)
+
+    user_mod= relationship("user")
 
 
 class user(Base):
