@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from . import models
 from .database import engine
 from .routes import post,user,Auth
+from .config import settinges
 
 app = FastAPI()
 

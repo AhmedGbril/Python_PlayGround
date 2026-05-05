@@ -26,3 +26,10 @@ class user(Base):
     email: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str]
     created_at: Mapped[datetime] = mapped_column(server_default=text("now()"))
+
+
+class Votes(Base):
+    __tablename__="votes"
+
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id",ondelete="CASCADE"),primary_key=True)
+    post_id: Mapped[int] = mapped_column(ForeignKey("post.id",ondelete="CASCADE"),primary_key=True)

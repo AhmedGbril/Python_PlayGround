@@ -3,6 +3,8 @@ from uuid import UUID
 
 from fastapi import Depends, APIRouter, Response, status, HTTPException
 from typing import List
+
+from sqlalchemy import func
 from .. import Schema,models,oauth2
 from sqlalchemy.orm import Session
 from ..database import get_db
@@ -12,10 +14,14 @@ router=APIRouter(
     tags=["Posts"]
 )
 
-@router.get("/",response_model=List[Schema.Post])
+@router.get("/")
 def get_all_posts(db: Session = Depends(get_db)):
-    posts = db.query(models.post).all()
-    return posts
+    
+   # writing SqlAlchemy joins 
+   posts= db.query(models.post,func.count(models.Votes.post_id).label("vote")
+    ).join(models.Votes,models.Votes.post_id==
+    models.post.id,isouter=True).group_by(models.post.id).all()
+   return posts
 
 
 @router.get("/{id}")
