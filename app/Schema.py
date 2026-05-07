@@ -27,10 +27,16 @@ class Post(BasePost):
     user_mod:ResUsers
     created_at:datetime
 
-    
     class Config:
         from_attributes=True
 
+# NEW: This matches the structure of your JOIN query
+class PostOut(BaseModel):
+    post: Post    # Note: Use the class name of the model in the query
+    vot: int     # Matches the .label("vot") in your query
+
+    class Config:
+        from_attributes = True
 
 class Users(BaseModel):
         name:str

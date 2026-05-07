@@ -14,11 +14,10 @@ router=APIRouter(
     tags=["Posts"]
 )
 
-@router.get("/")
+@router.get("/",response_model=List[Schema.PostOut])
 def get_all_posts(db: Session = Depends(get_db)):
-    
    # writing SqlAlchemy joins 
-   posts= db.query(models.post,func.count(models.Votes.post_id).label("vote")
+   posts= db.query(models.post, func.count(models.Votes.post_id).label("vot")
     ).join(models.Votes,models.Votes.post_id==
     models.post.id,isouter=True).group_by(models.post.id).all()
    return posts
